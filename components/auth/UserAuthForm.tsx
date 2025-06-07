@@ -1,20 +1,15 @@
 "use client";
 
 import { useState } from 'react';
-import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from 'firebase/auth';
+import { signInWithPopup, User } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { Label } from '../../components/ui/label';  
-import { Github, Mail } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function UserAuthForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
