@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const q = query(collection(db, 'lessons'), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
@@ -13,8 +13,14 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json(lessons);
-  } catch (error: any) {
-    console.error('Error fetching lessons:', error);
+  } catch (err) {
+    console.error('Error fetching lessons:', err);
+    if (err instanceof Error) {
+      return NextResponse.json(
+        { error: err.message },
+        { status: 500 }
+      );
+    }
     return NextResponse.json(
       { error: 'Failed to fetch lessons' },
       { status: 500 }

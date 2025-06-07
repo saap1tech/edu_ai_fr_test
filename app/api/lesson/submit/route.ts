@@ -57,10 +57,16 @@ export async function POST(request: NextRequest) {
       totalQuestions
     });
 
-  } catch (error: any) {
-    console.error('Error processing submission:', error);
+  } catch (err) {
+    console.error('Error processing submission:', err);
+    if (err instanceof Error) {
+      return NextResponse.json(
+        { error: err.message },
+        { status: 500 }
+      );
+    }
     return NextResponse.json(
-      { error: error.message || 'Failed to process submission' },
+      { error: 'Failed to process submission' },
       { status: 500 }
     );
   }
