@@ -2,7 +2,6 @@
 
 import { Vocabulary } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Volume2 } from 'lucide-react';
 
 interface ReadingSessionProps {
   content: string[];

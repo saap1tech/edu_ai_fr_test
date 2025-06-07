@@ -65,15 +65,19 @@ export default function UploadLessonButton() {
         throw new Error(errorData.error || 'Failed to process PDF');
       }
 
-      const result = await response.json();
+      await response.json();
       
       toast.success('Your lesson is ready! ✨', { id: toastId });
       setSelectedFile(null);
       setOpen(false);
       router.refresh(); // Refresh the page to show the new lesson
-    } catch (error: any) {
+    } catch (error) {
       console.error('Upload error:', error);
-      toast.error(`Error: ${error.message}`, { id: toastId });
+      if (error instanceof Error) {
+        toast.error(`Error: ${error.message}`, { id: toastId });
+      } else {
+        toast.error('An unknown error occurred.', { id: toastId });
+      }
     } finally {
       setIsUploading(false);
     }
