@@ -38,7 +38,7 @@ function LessonContent({ lessonId }: { lessonId: string }) {
           throw new Error('Failed to fetch lesson data.');
         }
         const data = await response.json();
-        setLesson(data);
+        setLesson(data as Lesson);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
