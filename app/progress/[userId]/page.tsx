@@ -36,8 +36,12 @@ export default function ProgressPage({ params }: { params: Promise<{ userId: str
         const data = await response.json();
         setUser(data.user);
         setSubmissions(data.submissions);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Failed to fetch progress');
+        }
       } finally {
         setLoading(false);
       }

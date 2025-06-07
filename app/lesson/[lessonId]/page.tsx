@@ -39,8 +39,12 @@ function LessonContent({ lessonId }: { lessonId: string }) {
         }
         const data = await response.json();
         setLesson(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Failed to fetch lesson data');
+        }
       } finally {
         setLoading(false);
       }
@@ -80,8 +84,12 @@ function LessonContent({ lessonId }: { lessonId: string }) {
         setShowConfetti(true);
       }
 
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Failed to submit lesson');
+      }
     } finally {
       setIsSubmitting(false);
     }

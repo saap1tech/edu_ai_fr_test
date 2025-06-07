@@ -70,10 +70,16 @@ export async function GET(
 
     return NextResponse.json({ user, submissions });
 
-  } catch (error: any) {
-    console.error('Error fetching user progress:', error);
+  } catch (err) {
+    console.error('Error fetching user progress:', err);
+    if (err instanceof Error) {
+      return NextResponse.json(
+        { error: err.message },
+        { status: 500 }
+      );
+    }
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch user progress' },
+      { error: 'Failed to fetch user progress' },
       { status: 500 }
     );
   }

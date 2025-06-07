@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
     let lessonData;
     try {
       lessonData = JSON.parse(text);
-    } catch (error) {
+    } catch {
       console.error('Invalid JSON response from Gemini:', text);
       return NextResponse.json(
         { error: 'Failed to generate lesson content' },
@@ -165,10 +165,16 @@ export async function POST(request: NextRequest) {
     const lessonRef = await addDoc(collection(db, 'lessons'), lessonToSave);
 
     return NextResponse.json({ ...lessonToSave, id: lessonRef.id });
-  } catch (error: any) {
-    console.error('Error processing PDF:', error);
+  } catch (err) {
+    console.error('Error processing PDF:', err);
+    if (err instanceof Error) {
+      return NextResponse.json(
+        { error: err.message },
+        { status: 500 }
+      );
+    }
     return NextResponse.json(
-      { error: error.message || 'Failed to process PDF' },
+      { error: 'Failed to process PDF' },
       { status: 500 }
     );
   }
