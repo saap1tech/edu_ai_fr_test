@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // Users can read and update their own profile, but not create or delete it.
+    // Creation is handled server-side or via auth triggers.
+    match /users/{userId} {
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Any authenticated user can read the list of lessons.
+    // In a real-world scenario, you might restrict this based on subscriptions, etc.
+    match /lessons/{lessonId} {
+      allow read: if request.auth != null;
+      
+      // Only an admin (or a secure cloud function) should be able to create, update or delete lessons.
+      // For this project, we'll allow any authenticated user to create for simplicity,
+      // but disallow update/delete to prevent tampering.
+      allow create: if request.auth != null;
+      allow update, delete: if false; // Protect lesson integrity
+    }
+    
+    // Users can only read and write to their own progress document.
+    // The path is structured as /users/{userId}/progress/{lessonId}
+    match /users/{userId}/progress/{lessonId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
