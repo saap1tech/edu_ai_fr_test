@@ -118,7 +118,7 @@ function LessonContent({ lessonId }: { lessonId: string }) {
           <DialogHeader>
             <DialogTitle>Lesson Complete!</DialogTitle>
             <DialogDescription>
-              Great job! Here's how you did:
+              Great job! Here is how you did:
             </DialogDescription>
           </DialogHeader>
           <div className="my-4 text-center text-4xl font-bold">

@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json(lessons);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching lessons:', error);
     return NextResponse.json(
       { error: 'Failed to fetch lessons' },

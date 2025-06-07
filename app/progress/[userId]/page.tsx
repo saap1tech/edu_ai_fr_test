@@ -61,7 +61,7 @@ export default function ProgressPage({ params }: { params: Promise<{ userId: str
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-4xl font-bold text-brand-primary mb-2">
-        {user.displayName}'s Progress
+        {`${user.displayName}'s Progress`}
       </h1>
       <p className="text-gray-500 mb-8">{user.email}</p>
 

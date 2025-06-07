@@ -31,7 +31,7 @@ export function ReadingSession({ content, vocabulary }: ReadingSessionProps) {
               <div className="text-sm text-gray-500">[{item.pronunciation}]</div>
               <div className="text-md">{item.translation}</div>
               <p className="text-sm italic text-gray-600 mt-1">
-                "{item.exampleSentence}"
+                {`"${item.exampleSentence}"`}
               </p>
             </div>
           ))}

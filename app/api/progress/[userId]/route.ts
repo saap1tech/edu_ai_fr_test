@@ -41,7 +41,7 @@ export async function GET(
     // Fetch the user's submissions
     const submissionsSnapshot = await adminDb.collection('submissions').where('userId', '==', userId).get();
 
-    let submissions: Submission[] = await Promise.all(
+    const submissions: Submission[] = await Promise.all(
       submissionsSnapshot.docs.map(async (doc) => {
         const submissionData = doc.data();
         let lessonData: Lesson | null = null;
